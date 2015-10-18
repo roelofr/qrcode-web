@@ -1,6 +1,10 @@
 (function ($) {
     "use strict";
 
+    var pixelGif = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
+    var buttons = {};
+
     var qr = {
         high: null,
         preview: null
@@ -60,7 +64,14 @@
 
 
     var updatePreview = function () {
-        currentContent = $('[data-content=qr-contents]').val();
+        currentContent = buttons.input.val();
+
+        if(currentContent.trim().length === 0) {
+            $(qrOptions.preview.target).find('img').attr('src', pixelGif);
+            buttons.hq.attr('disabled', 'disabled');
+            return;
+        }
+        buttons.hq.removeAttr('disabled');
 
         qr.preview.clear();
         qr.preview.makeCode(currentContent);
@@ -81,9 +92,9 @@
 
     var init = function () {
         // Add listeners for CTRL+Enter and the submit button
-        $('[data-action=create-qr]').on('click', updatePreview);
-        $('[data-action=download-qr-hq]').on('click', downloadHighDef);
-        $('[data-content=qr-contents]').on('keypress', captureCtrEnter);
+        buttons.create = $('[data-action=create-qr]').on('click', updatePreview);
+        buttons.hq = $('[data-action=download-qr-hq]').on('click', downloadHighDef).attr('disabled', 'disabled');
+        buttons.input = $('[data-content=qr-contents]').on('keypress', captureCtrEnter);
 
         // Create a simple QR code
         createObjects();

@@ -12,8 +12,8 @@ additions, feel free to open an issue or create a pull request.
 
 You can [see it in operation here](http://roelofr.github.io/qrcode-web/).
 
-## independent branch
-If you don't have Bower, you can check out the 'independent' branch, which has
+## No bower?
+If you don't have Bower, you can check out the 'gh-pages' branch, which has
 all the dependancies baked in.
 
 ## License
